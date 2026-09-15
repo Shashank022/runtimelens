@@ -1,0 +1,47 @@
+name: "RuntimeLens Java Scan"
+description: "Find Java problems that compile successfully but hurt at runtime."
+author: "RuntimeLens"
+inputs:
+  path:
+    description: "Path to scan"
+    required: false
+    default: "."
+  fail-on:
+    description: "Severity threshold that fails the action"
+    required: false
+    default: "HIGH"
+  sarif:
+    description: "Write SARIF report"
+    required: false
+    default: "true"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Java
+      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+      with:
+        distribution: temurin
+        java-version: "21"
+
+    - name: Build RuntimeLens
+      shell: bash
+      run: |
+        chmod +x "${{ github.action_path }}/build.sh"
+        "${{ github.action_path }}/build.sh"
+
+    - name: Scan
+      shell: bash
+      run: |
+        java -jar "${{ github.action_path }}/dist/runtimelens.jar" \
+          scan "${{ inputs.path }}" \
+          --format text \
+          --fail-on "${{ inputs.fail-on }}"
+
+    - name: Generate SARIF
+      if: ${{ inputs.sarif == 'true' }}
+      shell: bash
+      run: |
+        java -jar "${{ github.action_path }}/dist/runtimelens.jar" \
+          scan "${{ inputs.path }}" \
+          --format sarif \
+          --output runtimelens.sarif

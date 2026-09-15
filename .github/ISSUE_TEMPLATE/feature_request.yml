@@ -1,0 +1,26 @@
+name: Rule or feature proposal
+description: Suggest a new runtime-risk rule, integration, or improvement.
+title: "[Proposal]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Runtime problem
+      description: What developer/runtime problem should RuntimeLens help identify?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Java code
+      description: Show a minimal example when possible.
+      render: java
+  - type: textarea
+    id: impact
+    attributes:
+      label: Why it matters
+      description: Explain the likely production impact and how a developer could remediate it.
+    validations:
+      required: true

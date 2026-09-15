@@ -1,0 +1,42 @@
+name: Bug report
+description: Report an incorrect RuntimeLens result or CLI problem.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve RuntimeLens. **Do not report security vulnerabilities here.** Use the private process in SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: RuntimeLens version
+      placeholder: "0.1.0 or commit SHA"
+    validations:
+      required: true
+  - type: input
+    id: java
+    attributes:
+      label: Java version
+      placeholder: "java -version"
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened?
+      description: Describe the observed behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Please remove credentials, customer data, and proprietary code.
+      render: java
+  - type: textarea
+    id: output
+    attributes:
+      label: RuntimeLens output
+      render: text
